@@ -30,6 +30,7 @@ app.set("view engine", 'ejs')
 
 app.get('/', (req, res, next) => {
     console.log("this is is middle ware");   //meddileware me ham direct res send or show nahi krte hai , jb errors aaye thb hi send krte hai.
+
     const a = 2;
     const b = 3;
     console.log(a + b);
