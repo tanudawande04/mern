@@ -1,58 +1,43 @@
-// const http = require('http');
-
-// const server = http.createServer((req, res) => {
-//     if (req.url == '/about') {
-//         res.end("this is about page")
-//     }
-//     if (req.url == '/profile') {
-//         res.end("this us profile page")
-//     }
-//     if (req.url == '/') {
-//         res.end("this is home page")
-//     }
-//     if(req.url == '/contact'){
-//         res.end("this is  contact page")
-//     }
-// })
-
-// server.listen(3000)
-
-
-
 const express = require('express');
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 const app = express();
 
-app.use(morgan('dev'))
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-app.set("view engine", 'ejs')
+app.set("view engine", 'ejs');
 
+// Home route with middleware
 app.get('/', (req, res, next) => {
-    console.log("this is is middle ware");   //meddileware me ham direct res send or show nahi krte hai , jb errors aaye thb hi send krte hai.
-
-    const a = 2;
-    const b = 3;
-    console.log(a + b);
+    //meddileware me ham direct res send or show nahi krte hai , jb errors aaye thb hi send krte hai
+    console.log("this is is middle ware");
     next();
-
-
-
 }, (req, res) => {
-    res.render('index')
+    res.render('index');
+});
 
-
-})
-
-
-
-// app.get('/', (req, res) => {
-//     res.render('index')
-//     // res.send("this is home page")
-// })
-
+// About route
 app.get('/about', (req, res) => {
-    res.send("About page")
-})
+    res.send("About page");
+});
 
-app.listen(3000)
+// GET handler for /get-from-data (optional)
+app.get('/get-from-data', (req, res) => {
+    res.send("data recived");
+});
+
+// POST handler for /get-from-data
+app.post('/get-from-data', (req, res) => {
+    console.log(req.body);
+    res.send("data received");
+});
+
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
+
+// post = fronten se server tk data le jane ke liye..
+// get = server se frontend pe data le jaane ke
